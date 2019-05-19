@@ -47,4 +47,6 @@ xml.root {
     }
 }
 end
-puts builder.to_xml
+
+doc = Nokogiri::XML(builder.to_xml)
+File.write(filename, doc.to_xml)
