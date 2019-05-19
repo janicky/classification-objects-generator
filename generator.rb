@@ -1,4 +1,5 @@
 require 'faker'
+require 'nokogiri'
 require_relative 'classification_object'
 
 if ARGV.length != 2
@@ -33,3 +34,17 @@ while generated.length < count.to_i do
 end
 puts
 labels_count.each {|key, value| puts "#{key}: #{value}" }
+
+builder = Nokogiri::XML::Builder.new do |xml|
+xml.root {
+    xml.quotes {
+        generated.each do |o|
+            xml.quote {
+                xml.tvserie o.label
+                xml.body o.text
+            }
+        end
+    }
+}
+end
+puts builder.to_xml
