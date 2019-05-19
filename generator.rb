@@ -41,7 +41,7 @@ xml.root {
         generated.each do |o|
             xml.quote {
                 xml.tvserie o.label
-                xml.body o.text
+                xml.content o.text
             }
         end
     }
