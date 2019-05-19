@@ -14,14 +14,22 @@ generators = [
     ["got", Faker::TvShows::GameOfThrones],
     ["twinpeaks", Faker::TvShows::TwinPeaks],
     ["siliconvalley", Faker::TvShows::SiliconValley],
-    ["friends", Faker::TvShows::Friends]
+    ["friends", Faker::TvShows::Friends],
+    ["drwho", Faker::TvShows::DrWho],
+    ["simpsons", Faker::TvShows::Simpsons]
 ]
+
+labels_count = Hash.new(0)
 
 while generated.length < count.to_i do
     generator = generators.sample
     object = ClassificationObject.new(generator[0], generator[1].quote)
-    
     f = generated.select { |e| e.text == object.text }
     next unless f.first.nil?
     generated.push object
+
+    print '.'
+    labels_count[object.label] += 1
 end
+puts
+labels_count.each {|key, value| puts "#{key}: #{value}" }
